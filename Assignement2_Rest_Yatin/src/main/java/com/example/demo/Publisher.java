@@ -21,7 +21,7 @@ public class Publisher {
         this.name = name;
     }
 
-    // Getters and setters
+    // Getters and setter
     public long getPubId() {
         return pubId;
     }

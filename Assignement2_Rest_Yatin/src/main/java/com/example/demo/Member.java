@@ -28,7 +28,7 @@ public class Member {
         this.expiryDate = expiryDate;
     }
 
-    // Getters and setters (unchanged logic, but renamed for consistency)
+    // Getters and setters
     public long getMembId() {
         return membId;
     }
