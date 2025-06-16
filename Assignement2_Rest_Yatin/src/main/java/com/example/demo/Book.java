@@ -28,7 +28,7 @@ public class Book {
         this.available = available;
     }
 
-    // Getters and setters remain the same
+    // Getters and setters 
     public long getBookId() {
         return bookId;
     }
