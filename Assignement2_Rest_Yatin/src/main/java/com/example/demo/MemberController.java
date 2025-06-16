@@ -1,30 +1,35 @@
 package com.example.demo;
 
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/members")
 public class MemberController {
-    
-    @Autowired
-    private MemberRepository memberRepository;
-    
-    @GetMapping
-    public List<Member> getAllMembers() {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
+	@GetMapping("/member")
+    public List<Member> getAllMember() {
         return memberRepository.findAll();
     }
-    
-    @GetMapping("/{id}")
-    public Member getMemberById(@PathVariable Long id) {
-        return memberRepository.findById(id).orElse(null);
-    }
-    
-    @PostMapping
-    public Member createMember(@RequestBody Member member) {
+	
+	@GetMapping("/member/{id}")
+	public Optional<Member> getMemberById(@PathVariable long id) {
+		return memberRepository.findById(id);
+	}
+	
+	@PostMapping("/member")
+    public Member addMember(@Validated @RequestBody Member member) {
         return memberRepository.save(member);
     }
 }

@@ -1,69 +1,68 @@
 package com.example.demo;
 
-
-
-import jakarta.persistence.*;
 import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "members")  
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long membId;       
     
-    private String name;
-    private String email;
-    private String phone;
-    private Date membershipDate;
-   
+    private String name;     
+    private String address;   
+    private String membType;  
+    private Date membDate;  
+    private Date expiryDate; 
+    
     public Member() {}
-    
-    public Member(String name, String email, String phone, Date membershipDate) {
+
+    public Member(long membId, String name, String address, String membType, Date membDate, Date expiryDate) {
+        this.membId = membId;
         this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.membershipDate = membershipDate;
+        this.address = address;
+        this.membType = membType;
+        this.membDate = membDate;
+        this.expiryDate = expiryDate;
     }
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public Date getMembershipDate() {
-		return membershipDate;
-	}
-
-	public void setMembershipDate(Date membershipDate) {
-		this.membershipDate = membershipDate;
-	}
-    
-  
+    // Getters and setters (unchanged logic, but renamed for consistency)
+    public long getMembId() {
+        return membId;
+    }
+    public void setMembId(long membId) {
+        this.membId = membId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getMembType() {
+        return membType;
+    }
+    public void setMembType(String membType) {
+        this.membType = membType;
+    }
+    public Date getMembDate() {
+        return membDate;
+    }
+    public void setMembDate(Date membDate) {
+        this.membDate = membDate;
+    }
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
 }

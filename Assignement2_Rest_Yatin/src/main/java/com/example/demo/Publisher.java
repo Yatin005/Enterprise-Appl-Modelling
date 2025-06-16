@@ -1,59 +1,53 @@
 package com.example.demo;
 
-import jakarta.persistence.*;
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "publishers") 
 public class Publisher {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long pubId;  
     
-    private String name;
     private String address;
-    
-    @OneToMany(mappedBy = "publisher")
-    private List<Book> books;
-    
-    // Constructors, Getters, and Setters
+    private String name;
+
     public Publisher() {}
-    
-    public Publisher(String name, String address) {
+
+    public Publisher(long pubId, String address, String name) {
+        this.pubId = pubId;
+        this.address = address;
         this.name = name;
+    }
+
+    // Getters and setters
+    public long getPubId() {
+        return pubId;
+    }
+
+    public void setPubId(long pubId) {
+        this.pubId = pubId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
     }
 
-	public Long getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
-	}
-    
-    // Getters and Setters
+    @Override
+    public String toString() {
+        return "Publisher [pubId=" + pubId + ", address=" + address + ", name=" + name + "]";
+    }
 }

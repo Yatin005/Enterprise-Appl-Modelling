@@ -1,81 +1,62 @@
 package com.example.demo;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long bookId; 
     
-    private String title;
     private String author;
-    private String isbn;
-    private String publicationYear;
     
-    @ManyToOne
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher;
+    private String title; 
     
-    // Constructors, Getters, and Setters
-    public Book() {}
+    private Double price; 
     
-    public Book(String title, String author, String isbn, String publicationYear, Publisher publisher) {
-        this.title = title;
+    private boolean available;  
+    
+    public Book() {};
+
+    public Book(long bookId, String author, String title, Double price, boolean available) {
+        this.bookId = bookId;
         this.author = author;
-        this.isbn = isbn;
-        this.publicationYear = publicationYear;
-        this.publisher = publisher;
+        this.title = title;
+        this.price = price;
+        this.available = available;
     }
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public String getPublicationYear() {
-		return publicationYear;
-	}
-
-	public void setPublicationYear(String publicationYear) {
-		this.publicationYear = publicationYear;
-	}
-
-	public Publisher getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-	}
-    
-  
+    // Getters and setters remain the same
+    public long getBookId() {
+        return bookId;
+    }
+    public void setBookId(long id) {
+        this.bookId = id;
+    }
+    public String getAuthor() {
+        return author;
+    }
+    public void setAuthor(String value) {
+        this.author = value;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String value) {
+        this.title = value;
+    }
+    public Double getPrice() {
+        return price;
+    }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    public boolean isAvailable() {
+        return available;
+    }
+    public void setAvailable(boolean value) {
+        this.available = value;
+    }
 }
