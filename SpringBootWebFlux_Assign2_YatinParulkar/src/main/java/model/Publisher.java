@@ -1,37 +1,17 @@
 package model;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
 
+@Document
 @Data
-@Builder
-@ToString
 @AllArgsConstructor
-public class Publisher {
-	@Id
-	private long pubId;
-	private String name;
-	private String address;
-	public long getPubId() {
-		return pubId;
-	}
-	public void setPubId(long pubId) {
-		this.pubId = pubId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+@NoArgsConstructor
+public class Publisher{
+    @Id
+    private String publisherId;
+    private String name;
+    private String city;
 }

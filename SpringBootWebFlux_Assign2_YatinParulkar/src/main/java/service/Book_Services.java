@@ -1,51 +1,36 @@
 package service;
 
+import model.Book;
+import repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import model.Book;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import repository.BookRepository;
 
 @Service
 public class Book_Services {
-    @Autowired private BookRepository bookRepository;
 
+    @Autowired
+    private BookRepository repo;
+
+    // Add a new book
+    public Mono<Book> addBook(Book book) {
+        return repo.save(book);
+    }
+
+    // Get all books
     public Flux<Book> getAllBooks() {
-        return bookRepository.findAll();
+        return repo.findAll();
     }
 
-    public Mono<Book> getBookById(long bookId) {
-        return bookRepository.findByBookId(bookId);
+    // Get book by ID
+    public Mono<Book> getBookById(String id) {
+        return repo.findById(id);
     }
 
-    public Mono<Book> createBook(Book book) {
-        return bookRepository.save(book);
+    // Delete book by ID
+    public Mono<Void> deleteBook(String id) {
+        return repo.deleteById(id);
     }
 
-    public Mono<Book> updateBook(long bookId, Book book) {
-        return bookRepository.findByBookId(bookId)
-                .flatMap(existingBook -> {
-                    existingBook.setAuthor(book.getAuthor());
-                    existingBook.setTitle(book.getTitle());
-                    existingBook.setPrice(book.getPrice());
-                    existingBook.setAvailable(book.isAvailable());
-                    return bookRepository.save(existingBook);
-                });
-    }
-
-    public Mono<Void> deleteBook(long bookId) {
-        return bookRepository.deleteByBookId(bookId);
-    }
-
-    public Flux<Book> getBooksByPublisher(long publisherId) {
-        return bookRepository.findByPublisherId(publisherId);
-    }
-
-   
-
-    public Flux<Book> getBooksBorrowedByMember(long membId) {
-        return bookRepository.findByBorrowedBy(membId);
-    }
 }

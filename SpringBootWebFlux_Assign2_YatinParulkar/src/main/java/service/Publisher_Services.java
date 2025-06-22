@@ -11,38 +11,27 @@ import repository.PublisherRepository;
 
 @Service
 public class Publisher_Services {
-    @Autowired private PublisherRepository publisherRepository;
 
+    @Autowired
+    private PublisherRepository repo;
+
+    // Add a new publisher
+    public Mono<Publisher> addPublisher(Publisher publisher) {
+        return repo.save(publisher);
+    }
+
+    // Get all publishers
     public Flux<Publisher> getAllPublishers() {
-        return publisherRepository.findAll();
+        return repo.findAll();
     }
 
-    public Mono<Publisher> getPublisherById(long pubId) {
-        return publisherRepository.findByPubId(pubId);
+    // Get publisher by ID
+    public Mono<Publisher> getPublisherById(String id) {
+        return repo.findById(id);
     }
 
-    public Mono<Publisher> createPublisher(Publisher publisher) {
-        return publisherRepository.save(publisher);
-    }
-
-    public Mono<Publisher> updatePublisher(long pubId, Publisher publisher) {
-        return publisherRepository.findByPubId(pubId)
-                .flatMap(existingPublisher -> {
-                    existingPublisher.setName(publisher.getName());
-                    existingPublisher.setAddress(publisher.getAddress());
-                    return publisherRepository.save(existingPublisher);
-                });
-    }
-
-    public Mono<Void> deletePublisher(long pubId) {
-        return publisherRepository.deleteByPubId(pubId);
-    }
-
-    public Flux<Publisher> getPublishersByName(String name) {
-        return publisherRepository.findByName(name);
-    }
-
-    public Flux<Publisher> searchPublishersByAddress(String address) {
-        return publisherRepository.findByAddressContaining(address);
+    // Delete publisher by ID
+    public Mono<Void> deletePublisher(String id) {
+        return repo.deleteById(id);
     }
 }

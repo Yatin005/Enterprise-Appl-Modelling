@@ -1,61 +1,29 @@
 package model;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
-
+@Document
 @Data
-@Builder
-@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Book {
     @Id
-    private String id;
-    private long bookId;
-    private String author;
+    private String bookId;
     private String title;
-    private Double price;
-    private boolean available;
-
-
-	public String getId() {
-		return id;
+    private String author;
+    private String publisherId;
+	public Object getTitle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public Object getAuthor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	public long getBookId() {
-		return bookId;
-	}
-	public void setBookId(long bookId) {
-		this.bookId = bookId;
-	}
-	
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public Double getPrice() {
-		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-	public boolean isAvailable() {
-		return available;
-	}
-	public void setAvailable(boolean available) {
-		this.available = available;
+	public Object getPublisherId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
