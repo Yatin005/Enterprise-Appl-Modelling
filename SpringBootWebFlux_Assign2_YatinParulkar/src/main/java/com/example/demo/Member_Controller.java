@@ -1,16 +1,13 @@
-package controller;
+package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import model.Member;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import service.Member_Services;
 
 
 @RestController
-@RequestMapping("/api/members")
 public class Member_Controller {
 
     @Autowired

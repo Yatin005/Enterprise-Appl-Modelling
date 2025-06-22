@@ -1,13 +1,11 @@
-package service;
+package com.example.demo;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import model.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import repository.PublisherRepository;
 
 @Service
 public class Publisher_Services {
