@@ -25,15 +25,5 @@ public class MarketServiceController {
 	    System.out.println("Port : " + serverPort);
 	 
 	    return "Hello form Backend!!! " + " Host : localhost " + " :: Port : " + serverPort;
-	    
-	  /*
-	   * Car car = 
-  objectMapper.readValue(new URL("file:src/test/resources/json_car.json"), Car.class);  
-  OR you do via URI 
-  objectMapper.readValue(new URL("--the way you call the get request via postman"), Car.class);
-  
-	   */
-	    
 	  }
-
 }
