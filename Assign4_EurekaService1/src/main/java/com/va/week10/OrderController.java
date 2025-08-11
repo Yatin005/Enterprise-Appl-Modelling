@@ -1,26 +1,47 @@
 package com.va.week10;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 
-@Controller
-@AllArgsConstructor
+import java.io.File;
+import java.time.LocalDateTime;
+
+@RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    private  OrderService orderService;
+    private final  Assign4EurekaServerApplication assign4EurekaServerApplication;
 
-    @GetMapping
-    public String listOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
-        return "orders";
+    private final OrderRepository repo;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    public OrderController(OrderRepository repo, RestTemplate restTemplate, ObjectMapper objectMapper,  Assign4EurekaServerApplication  assign4EurekaServerApplication) {
+        this.repo = repo;
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+        this.assign4EurekaServerApplication =  assign4EurekaServerApplication;
     }
 
-    @PostMapping("/place")
-    public String placeOrder(@ModelAttribute Order order) {
-        orderService.createOrder(order);
-        return "redirect:/orders";
+    @PostMapping
+    public ResponseEntity<?> placeOrder(@Valid @RequestBody Order order) {
+        order.setOrderDateTime(LocalDateTime.now());
+        order.setOrderAmt(order.getQuantity() * 100.0);
+        Order saved = repo.save(order);
+
+        try {
+            File file = new File("order-" + saved.getId() + ".json");
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, saved);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String marketUrl = "http://market-service/market/process";
+        String marketResponse = restTemplate.postForObject(marketUrl, saved, String.class);
+
+        return ResponseEntity.ok("Order placed. Market says: " + marketResponse);
     }
 }

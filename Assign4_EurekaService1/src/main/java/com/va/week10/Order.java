@@ -2,58 +2,67 @@ package com.va.week10;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Document(collection = "orders")
 public class Order {
-    public String getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getStockSymbol() {
-		return stockSymbol;
-	}
-	public void setStockSymbol(String stockSymbol) {
-		this.stockSymbol = stockSymbol;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	@Id
-    private String orderID;
-    private String userId;
-    private String stockSymbol;
-    private int quantity;
-    private double price;
-    private String status;
+
+    @Id
+    private String id;
+
+    @NotBlank
+    private String tickerSymbol;
+
+    @NotNull
+    @Min(1)
+    private Integer quantity;
+
+    private double orderAmt;
+    private String orderType;
+    private LocalDateTime orderDateTime;
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTickerSymbol() {
+        return tickerSymbol;
+    }
+    public void setTickerSymbol(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getOrderAmt() {
+        return orderAmt;
+    }
+    public void setOrderAmt(double orderAmt) {
+        this.orderAmt = orderAmt;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
+    }
+    public void setOrderDateTime(LocalDateTime orderDateTime) {
+        this.orderDateTime = orderDateTime;
+    }
 }
