@@ -24,7 +24,6 @@ public class OrderController {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-   
     public OrderController(OrderRepository repo, RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.repo = repo;
         this.restTemplate = restTemplate;
@@ -40,21 +39,28 @@ public class OrderController {
         try {
             File file = new File("order-" + saved.getId() + ".json");
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, saved);
+
            
-            logger.info("Saved order {} to file.", saved.getId());
         } catch (Exception e) {
-            logger.error("Error writing order {} to file.", saved.getId(), e);
+           
         }
 
         String marketResponse;
         String marketUrl = "http://market-service/market/process";
+        String feeUrl = "http://fee-service/fees/process";
+
         try {
+            // First, call the MarketService
             marketResponse = restTemplate.postForObject(marketUrl, saved, String.class);
+                 
+            restTemplate.postForObject(feeUrl, saved, String.class);
+           
+
         } catch (ResourceAccessException e) {
-            logger.error("Failed to connect to market-service at {}: {}", marketUrl, e.getMessage());
-            return new ResponseEntity<>("Order placed, but MarketService is unavailable.", HttpStatus.SERVICE_UNAVAILABLE);
+            
+            return new ResponseEntity<>("Order placed, but a required service is unavailable.", HttpStatus.SERVICE_UNAVAILABLE);
         } catch (Exception e) {
-            logger.error("An unexpected error occurred while calling market-service.", e);
+           
             return new ResponseEntity<>("Order placed, but an unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

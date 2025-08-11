@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,10 +15,14 @@ public class FeeController {
     private final FeeRepository repo;
     private final ObjectMapper objectMapper;
 
-    // The RestTemplate dependency is removed as it's no longer used.
     public FeeController(FeeRepository repo, ObjectMapper objectMapper) {
         this.repo = repo;
         this.objectMapper = objectMapper;
+    }
+    
+    @GetMapping
+    public List<Fee> getAllFees() {
+        return repo.findAll();
     }
 
     @PostMapping("/process")

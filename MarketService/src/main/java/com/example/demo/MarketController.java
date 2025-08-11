@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.util.List;
 
 @RestController
 @RequestMapping("/market")
@@ -14,10 +15,14 @@ public class MarketController {
     private final MarketRepository repo;
     private final ObjectMapper objectMapper;
 
-    // The RestTemplate dependency is removed as it is no longer used
     public MarketController(MarketRepository repo, ObjectMapper objectMapper) {
         this.repo = repo;
         this.objectMapper = objectMapper;
+    }
+    
+    @GetMapping
+    public List<Marketorder> getAllMarketorders() {
+        return repo.findAll();
     }
 
     @PostMapping("/process")
