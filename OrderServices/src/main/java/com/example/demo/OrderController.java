@@ -13,18 +13,18 @@ import jakarta.validation.Valid;
 import java.io.File;
 import java.time.LocalDateTime;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    // 1. Use a static logger for better logging practices
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     private final OrderRepository repo;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    // 2. Removed unused 'OrderServicesApplication' dependency from the constructor
+   
     public OrderController(OrderRepository repo, RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.repo = repo;
         this.restTemplate = restTemplate;
@@ -40,7 +40,7 @@ public class OrderController {
         try {
             File file = new File("order-" + saved.getId() + ".json");
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, saved);
-            // 3. Replaced e.printStackTrace() with a proper logging call
+           
             logger.info("Saved order {} to file.", saved.getId());
         } catch (Exception e) {
             logger.error("Error writing order {} to file.", saved.getId(), e);
@@ -49,10 +49,8 @@ public class OrderController {
         String marketResponse;
         String marketUrl = "http://market-service/market/process";
         try {
-            // 4. Added robust error handling for RestTemplate calls
             marketResponse = restTemplate.postForObject(marketUrl, saved, String.class);
         } catch (ResourceAccessException e) {
-            // This exception often indicates a 'no instance available' error
             logger.error("Failed to connect to market-service at {}: {}", marketUrl, e.getMessage());
             return new ResponseEntity<>("Order placed, but MarketService is unavailable.", HttpStatus.SERVICE_UNAVAILABLE);
         } catch (Exception e) {
