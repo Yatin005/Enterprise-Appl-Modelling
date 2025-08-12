@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Husky Air Reservation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background-image: url('/images/image_cd9949.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f7f9fc;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .form-group input, .form-group select {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Fill your Details</h1>
+        <form th:action="@{/reservations/submit}" th:object="${reservationForm}" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" th:field="*{firstName}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" th:field="*{lastName}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfPassengers">No. Of Passengers</label>
+                <input type="number" id="numberOfPassengers" th:field="*{numberOfPassengers}" min="1" max="10" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="selectedClass">Select Your Class</label>
+                <select id="selectedClass" th:field="*{selectedClass}">
+                    <option value="Economy class">Economy class</option>
+                    <option value="Business class">Business class</option>
+                    <option value="First class">First class</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" th:field="*{time}" />
+            </div>
+            
+            <div class="form-group">
+                <label for="departingDate">Date of Departing</label>
+                <input type="date" id="departingDate" th:field="*{departingDate}" required/>
+            </div>
+
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>

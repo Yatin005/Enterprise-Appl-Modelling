@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reservation Form</title>
+</head>
+<body>
+<h2>Make a Reservation</h2>
+<form th:action="@{/reservation}" th:object="${reservationForm}" method="post">
+    First Name: 
+    <input type="text" th:field="*{firstName}" />
+    <br/><br/>
+    Last Name: 
+    <input type="text" th:field="*{lastName}" />
+    <br/><br/>
+    Number of Passengers: 
+    <input type="number" th:field="*{numberOfPassengers}" />
+    <br/><br/>
+    Select Your Class:
+    <select th:field="*{travelClass}">
+	    <option value="ECONOMY">Economy</option>
+	    <option value="BUSINESS">Business</option>
+	    <option value="FIRST">First</option>
+	</select>
+	<br/><br/>
+    Phone Number: 
+    <input type="tel" th:field="*{phoneNumber}" />
+    <br/><br/>
+    Time: 
+    <input type="time" th:field="*{time}" />
+    <br/><br/>
+    Date of Departing: 
+    <input type="date" th:field="*{dateOfDeparting}" />
+    <br/><br/>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
